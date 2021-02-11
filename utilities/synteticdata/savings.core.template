@@ -1,0 +1,44 @@
+[
+  {
+    'repeat(5, 10)': {
+      uuid: '{{guid()}}',
+      ibanNumber: 'ES91 {{integer(1000, 9999, "0000")}} {{integer(1000, 9999, "0000")}} {{integer(10, 99, "00")}} {{integer(1000000000, 9999999999, "0000000000")}}',
+      status: function(object) {
+        var status = ['IDLE', 'ACTIVE', 'BLOCKED', 'CLOSED'];
+        return status[object.integer(1, status.length -1)];
+      },
+      creationDate: '{{moment(this.date(new Date(2020, 0, 1), new Date())).format("YYYY-MM-DD hh:mm:ss.SSS")}}',
+      signoffDate(object) {
+      	var creationDate = new Date(this.creationDate);
+        var maxSignoffDate = creationDate.setDate(creationDate.getDate() + 4);
+        return object.moment(date(new Date(this.creationDate), new Date(maxSignoffDate))).format("YYYY-MM-DD hh:mm:ss.SSS");
+      },
+      participantsList: [{
+        'repeat(1, 2)': {
+          uuid: '{{guid()}}',
+          participationType(object) {
+            var type = ['OWNER', 'ALLOWED', 'INFORMED'];
+            if (object.index()==0) {
+              return type[0];
+            } else {
+              return type[object.integer(1, type.length -1)];  
+            }
+          },
+          name: '{{surname()}}, {{firstName()}}',
+          lastPersonModification: '{{guid()}}',
+          lastModificationDate(object) {
+            var actualDate = new Date();
+            var maxDate = actualDate.setDate(actualDate.getDate() + 4);
+            return object.moment(date(new Date(actualDate), new Date(maxDate))).format("YYYY-MM-DD hh:mm:ss.SSS");
+          }
+        }
+      }],
+      lastPersonModification: '{{guid()}}',
+      lastModificationDate(object) {
+      	var signoffDate = new Date(this.signoffDate);
+        var maxModificationDate = signoffDate.setDate(signoffDate.getDate() + 10);
+        return object.moment(date(new Date(this.signoffDate), new Date(maxModificationDate))).format("YYYY-MM-DD hh:mm:ss.SSS");
+      },
+    }
+  }
+]
