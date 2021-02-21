@@ -6,5 +6,7 @@ import org.modernbank.savings.contract.model.SavingsContractModel;
 import org.modernbank.savings.contract.request.SavingsContractSearchRequest;
 
 public interface SavingsContractRepositoryCustom {
-    List<SavingsContractModel> searchContracts(SavingsContractSearchRequest filter);
+    List<SavingsContractModel> searchContracts(String clientUuid, SavingsContractSearchRequest filter);
+
+    List<SavingsContractModel> getAllContracts(String clientUuid);
 }

@@ -27,3 +27,6 @@ hs_err_pid*
 
 # Local storage
 volumes/storage/
+
+# Strange error (keycloak .project file automatically created)
+architecture/keycloak

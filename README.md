@@ -1,6 +1,6 @@
 # Modernbank
 
-Personal project for self-learning about modern technologies such as:
+Personal project for self-learning about modern technologies using a banking platform as use case. Somo of those modern technologies include:
 
 - API driven platforms
 - Microservice architectures
@@ -28,6 +28,8 @@ Currently using a Mac OSx (Catalina) based laptop, but currently migrating (pers
 - Postman (<https://www.postman.com/downloads/>)
 - iTerm, with zsh shell (<https://iterm2.com/>)
 - HomeBrew (<https://brew.sh/index_es>)
+- Git (<https://github.com/>)
+- Gradle (<https://gradle.org/>)
 
 ### 3. Modernbank architecture
 

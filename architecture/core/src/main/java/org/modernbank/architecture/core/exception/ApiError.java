@@ -1,10 +1,11 @@
 package org.modernbank.architecture.core.exception;
 
 import lombok.Data;
-
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @Data
+@ApiModel
 public class ApiError {
 
     @ApiModelProperty(value = "Unique alphanumeric human readable error code", example = "E1001", required = true)

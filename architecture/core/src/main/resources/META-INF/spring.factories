@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  org.modernbank.architecture.core.ExceptionHandlerAutoConfiguration
+  org.modernbank.architecture.core.ArchitectureCoreAutoConfiguration

@@ -1,0 +1,26 @@
+server:
+  port: 8050
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    consul:
+      enabled: true
+      host: localhost
+      port: 8500
+      discovery:
+        instance-id: "${spring.application.name}:${random.int[1,999999]}"
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: test
+          uri: http://www.google.com
+          predicates:
+            - Path=/modernbank/savings/transactions/**
+        - id: savings-contract
+          uri: lb://savings-contract
+          predicates:
+            - Path=/modernbank/savings/**

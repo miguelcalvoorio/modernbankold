@@ -10,19 +10,14 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 import org.modernbank.architecture.core.exception.ApiErrorResponse;
-
-import org.springframework.http.ResponseEntity;
+import org.modernbank.savings.contract.response.SavingsContractListResponse;
 
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @ApiOperation(
-    value = "This operations allows searching for savings contracts\r\n",
-    notes = "This operations allows searching for savings contracts using the following filtering criteria:\r\n"
-          + "- Participant (Person uId)\r\n"
-          + "- Status (PENDING TO BE ACTIVATED, ACTIVE, BLOCKED, CLOSED)\r\n"
-          + "- Sign-off date\r\n",
+    value = "This operations gets all savings contracts where user has any kind of participation\r\n",
     tags  = { "Savings contracts" },
-    response = ResponseEntity.class
+    response = SavingsContractListResponse.class
 )
 @ApiResponses(value = {
     @ApiResponse(code = 400, message = "Bad request", response = ApiErrorResponse.class),

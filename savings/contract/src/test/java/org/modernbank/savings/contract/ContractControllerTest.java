@@ -19,6 +19,11 @@ public class ContractControllerTest {
     private MockMvc mockMvc;
 
     @Test
+	public void postContractSearchShouldReturnOK() throws Exception {
+        this.mockMvc.perform(post("/savings/search/")).andExpect(status().isOk());
+    }
+
+    @Test
 	public void getContractListShouldReturnOK() throws Exception {
         this.mockMvc.perform(get("/savings/")).andExpect(status().isOk());
     }

@@ -1,0 +1,36 @@
+version: "3.0"
+
+networks:
+  keycloak-network:
+
+services:
+  mysql:
+    image: mysql
+    networks:
+    - keycloak-network
+    volumes:
+    - /Users/miguel.calvo/techdemos/modernbank/volumes/storage/keycloak/database:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root_password mysql
+
+  keycloak:
+    image: jboss/keycloak
+    networks:
+    - keycloak-network
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - 8180:8080
+    depends_on:
+      - mysql
+
+  

@@ -25,7 +25,7 @@
             }
           },
           name: '{{surname()}}, {{firstName()}}',
-          lastPersonModification: '{{guid()}}',
+          lastModificationBy: '{{guid()}}',
           lastModificationDate(object) {
             var actualDate = new Date();
             var maxDate = actualDate.setDate(actualDate.getDate() + 4);
@@ -33,7 +33,7 @@
           }
         }
       }],
-      lastPersonModification: '{{guid()}}',
+      lastModificationBy: '{{guid()}}',
       lastModificationDate(object) {
       	var signoffDate = new Date(this.signoffDate);
         var maxModificationDate = signoffDate.setDate(signoffDate.getDate() + 10);

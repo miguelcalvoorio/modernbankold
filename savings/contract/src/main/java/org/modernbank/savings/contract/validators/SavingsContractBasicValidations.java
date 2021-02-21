@@ -1,9 +1,9 @@
-package org.modernbank.savings.contract.service;
+package org.modernbank.savings.contract.validators;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class SavingsContractValidations {
+public class SavingsContractBasicValidations {
 
     public boolean isValidDate(String date) {
         return true;

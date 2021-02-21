@@ -10,8 +10,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 import org.modernbank.architecture.core.exception.ApiErrorResponse;
-
-import org.springframework.http.ResponseEntity;
+import org.modernbank.savings.contract.response.SavingsContractResponse;
 
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
@@ -22,7 +21,7 @@ import org.springframework.http.ResponseEntity;
           + "- Status (PENDING TO BE ACTIVATED, ACTIVE, BLOCKED, CLOSED)\r\n"
           + "- Sign-off date\r\n",
     tags  = { "Savings contracts" },
-    response = ResponseEntity.class
+    response = SavingsContractResponse.class
 )
 @ApiResponses(value = {
     @ApiResponse(code = 400, message = "Bad request", response = ApiErrorResponse.class),

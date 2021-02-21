@@ -1,0 +1,29 @@
+server:
+  servlet:
+    context-path: /modernbank
+  port: 8080
+
+spring:
+  application:
+    name: savings-contract
+  data:
+    mongodb:
+      database: savings
+  cloud:
+    consul:
+      enabled: false
+      host: localhost
+      port: 8500
+      discovery:
+        instance-id: "${spring.application.name}:${random.int[1,999999]}"
+        healthCheckPath: ${server.servlet.context-path}/actuator/health
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/auth/realms/modernbank
+          jwk-set-uri: http://localhost:8180/auth/realms/modernbank/protocol/openid-connect/certs
+
+modernbank:
+  security:
+    enabled: true
