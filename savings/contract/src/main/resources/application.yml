@@ -1,8 +1,9 @@
+---
 server:
   servlet:
     context-path: /modernbank
-  port: 8080
-
+  port: 9080
+  
 spring:
   application:
     name: savings-contract
@@ -21,9 +22,40 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8180/auth/realms/modernbank
-          jwk-set-uri: http://localhost:8180/auth/realms/modernbank/protocol/openid-connect/certs
+          issuer-uri: http://keycloak:8080/auth/realms/modernbank
+          jwk-set-uri: http://keycloak:8080/auth/realms/modernbank/protocol/openid-connect/certs
+
+  # Keycloak is highly restrictive on authorization process
+  # To keep compatible both local and docker versions of this microservices I use keycloak as hostname
+  # adding a match to 127.0.0.1 address in my locak hosts file
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: health, metrics
 
 modernbank:
   security:
     enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  cloud:
+    consul:
+      enabled: true
+      host: consul
+      port: 8500
+      discovery:
+        instance-id: "${spring.application.name}:${random.int[1,999999]}"
+        healthCheckPath: ${server.servlet.context-path}/actuator/health
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://keycloak:10380/auth/realms/modernbank
+#          jwk-set-uri: http://keycloak:10380/auth/realms/modernbank/protocol/openid-connect/certs

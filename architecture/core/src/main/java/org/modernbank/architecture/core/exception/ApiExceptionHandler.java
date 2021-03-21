@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
@@ -57,6 +60,8 @@ public class ApiExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiErrorResponse handlerException(Exception ex) {
+        log.error("Internal server error; exception {}", ex);
+
         ApiError error = new ApiError();
         error.setErrorCode(ExceptionUtils.ERROR_GENERIC_CODE);
         error.setErrorLevel(ExceptionUtils.ErrorLevel.ERROR.toString());

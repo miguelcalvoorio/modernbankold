@@ -12,9 +12,16 @@ java {
     withSourcesJar()
 }
 
+ext {
+    logStashLogbackEncoderVersion = '6.1'
+    springCloudVersion = '2020.0.1'
+    //springCloudVersion = 'Greenwich.RELEASE'
+}
+
 dependencyManagement {
   imports {
     mavenBom("org.springframework.boot:spring-boot-dependencies:2.1.7.RELEASE")
+    mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
   }
 }
 
@@ -26,8 +33,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server' //new
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 	compileOnly 'org.projectlombok:lombok'
+    compile 'org.springframework.cloud:spring-cloud-starter-sleuth' //new
+    compile "net.logstash.logback:logstash-logback-encoder:$logStashLogbackEncoderVersion" //new
 	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'

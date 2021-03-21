@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +37,7 @@ import org.modernbank.savings.contract.response.SavingsContractResponse;
 import org.modernbank.savings.contract.service.SavingsContractService;
 import org.modernbank.savings.contract.validators.SavingsContractRegistryValidation;
 
+@Slf4j
 @RestController
 @Api(tags = "Savings contracts")
 public class SavingsContractController {
@@ -90,6 +92,7 @@ public class SavingsContractController {
         //@Size(min = 36, max = 36, message = "unique ID structure: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX")
         @PathVariable("contractUuid") String contractUuid) {
     
+            log.info("Request contract {}", contractUuid);
             return assembler.toModel(service.getContract(contractUuid));
     }
 

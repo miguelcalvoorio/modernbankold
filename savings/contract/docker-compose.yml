@@ -1,0 +1,85 @@
+version: "3.8"
+
+networks:
+  management-network:
+  keycloak-network:
+  savings-contract-network:
+
+services:
+  keycloak-mysql:
+    image: mysql
+    container_name: keycloak-mysql
+    networks:
+    - management-network
+    - keycloak-network
+    volumes:
+    - /Users/miguel.calvo/techdemos/modernbank/volumes/storage/keycloak/database:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root_password mysql
+
+  keycloak:
+    image: jboss/keycloak
+    container_name: keycloak
+    networks:
+    - management-network
+    - keycloak-network
+#    command: ["-Djboss.socket.binding.port-offset=300"]
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: keycloak-mysql
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+#    expose:
+#    - "8380"
+    ports:
+#    - "8380:8380"
+    - "8080:8080"
+    depends_on:
+    - keycloak-mysql
+
+  consul-server-bootstrap:
+    image: consul:latest
+    container_name: consul
+    networks:
+    - management-network
+    ports:
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:8600"
+      - "8600:8600/udp"
+    command: "agent -server -bootstrap-expect 3 -ui -client 0.0.0.0"
+
+  consul-server-1:
+    image: consul:latest
+    container_name: consul-1
+    networks:
+    - management-network
+    command: "agent -server -retry-join consul-server-bootstrap -client 0.0.0.0"
+
+  consul-server-2:
+    image: consul:latest
+    container_name: consul-2
+    networks:
+    - management-network
+    command: "agent -server -retry-join consul-server-bootstrap -client 0.0.0.0"
+
+  mongodb:
+    image : mongo
+    container_name: savings-mongodb
+    networks:
+    - management-network
+    - savings-contract-network
+    environment:
+    - PUID=1000
+    - PGID=1000
+    volumes:
+    - /Users/miguel.calvo/techdemos/modernbank/volumes/storage/savings/database:/data/db
+    ports:
+    - 27017:27017
+    restart: unless-stopped

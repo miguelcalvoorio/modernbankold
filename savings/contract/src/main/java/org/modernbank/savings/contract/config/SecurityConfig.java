@@ -6,10 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.modernbank.architecture.core.exception.AccessDeniedFailureHandler;
 import org.modernbank.architecture.core.exception.AuthenticationEntryPointFailureHandler;
 
 @Configuration
+@Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -21,11 +24,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${modernbank.security.enabled}")
     private boolean securityEnabled = false;
 
+    @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
+    private String keycloakUrl;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        log.info("Keycloak URL --> " + keycloakUrl);
+
         if (!securityEnabled) {
+            log.info("Security disabled");
+
             http.authorizeRequests().antMatchers("/").permitAll();
+
         } else {
+            log.info("Security enabled");
+
             http.cors();
             
             // Allow access

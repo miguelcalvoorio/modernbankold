@@ -1,0 +1,9 @@
+{
+    "properties": [
+        {
+            "name": "modernbank.security.enabled",
+            "type": "boolean",
+            "description": "Enables authentication and security controls."
+        }
+    ]
+}

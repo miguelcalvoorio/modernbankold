@@ -8,6 +8,7 @@
 - Common Exceptions clases for CRUD operations
 - Common Exception handler for controller REST endpoints operations (autoconfigures with ```@RestControllerAdvice``` annotation)
 - Error messages service with localization
+- Logback configuration for Logstash
 
 ### 2. Installation requirements
 
@@ -18,8 +19,11 @@
 
 Some of architecture lib configuration are managed through properties files on consumer applications
 
-- ApiExceptionHandler activation ```modernbank.apiExceptionHandler.enabled = true```
 - Message properties on files named ```error.messages.properties``` plus localized versions (i.e. ```error.messages_es.properties```)
+
+It also add specific Moderbank properties definition to be used by applications
+
+- Enable REST endpoints security ```modernbank.security.enabled``` (boolean value)
 
 ### 4. Architecture project
 
